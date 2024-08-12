@@ -131,7 +131,6 @@
                         <image>
                             <repository>${dockerHubPublic}/library/oraclelinux</repository>
                             <tag>9-slim-fips</tag>
-                            <digest>sha256:0eeb3016f8e5b5d96ad9efae11dc4df4cd0c2310266d65743055cb2657954ce2</digest>
                         </image>
                     </imageManagement>
                 </configuration>

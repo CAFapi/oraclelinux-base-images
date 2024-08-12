@@ -198,6 +198,22 @@
                     <verbose>api,build</verbose>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <licenseSets>
+                        <licenseSet>
+                            <excludes combine.children="append">
+                                <exclude>**/PGDG-RPM-GPG-KEY-RHEL</exclude>
+                            </excludes>
+                        </licenseSet>
+                    </licenseSets>
+                    <mapping>
+                        <repo>SCRIPT_STYLE</repo>
+                    </mapping>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

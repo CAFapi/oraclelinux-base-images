@@ -22,8 +22,8 @@ ARG BASE_IMAGE
 FROM ${BASE_IMAGE} AS stage1
 
 # Install OpenJDK 21 Runtime Environment
-ARG JRE_VERSION
-RUN microdnf -y install ${JRE_VERSION} && \
+ARG JAVA_VERSION
+RUN microdnf -y install java-${JAVA_VERSION}-openjdk && \
     microdnf clean all
 
 #
@@ -44,5 +44,5 @@ FROM stage1
 COPY --from=stage2 /wd /
 
 # Set JRE Home
-ARG JRE_PATH
-ENV JRE_HOME=/etc/alternatives/${JRE_PATH}
+ARG JAVA_VERSION
+ENV JRE_HOME=/etc/alternatives/jre_${JAVA_VERSION}_openjdk

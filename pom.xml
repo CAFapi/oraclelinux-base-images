@@ -182,9 +182,11 @@
                         <image>
                             <name>${dockerCafImagePrefix}oraclelinux-jre21${dockerProjectVersion}</name>
                             <build>
-                                <contextDir>jre21</contextDir>
+                                <contextDir>jre</contextDir>
                                 <args>
                                     <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-base${dockerProjectVersion}</BASE_IMAGE>
+                                    <JRE_VERSION>java-21-openjdk</JRE_VERSION>
+                                    <JRE_PATH>jre_21_openjdk</JRE_PATH>
 
                                     <!-- Enable internet access -->
                                     <http_proxy>${env.HTTP_PROXY}</http_proxy>
@@ -196,12 +198,13 @@
                         <image>
                             <name>${dockerCafImagePrefix}oraclelinux-jre17${dockerProjectVersion}</name>
                             <build>
-                                <contextDir>jre17</contextDir>
+                                <contextDir>jre</contextDir>
                                 <args>
                                     <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-base${dockerProjectVersion}</BASE_IMAGE>
-                                    <JRE21_IMAGE>${dockerCafImagePrefix}oraclelinux-jre21${dockerProjectVersion}</JRE21_IMAGE>
+                                    <JRE_VERSION>java-17-openjdk</JRE_VERSION>
+                                    <JRE_PATH>jre_17_openjdk</JRE_PATH>
 
-                                    <!-- Enable internet access -->
+                                     <!--Enable internet access--> 
                                     <http_proxy>${env.HTTP_PROXY}</http_proxy>
                                     <https_proxy>${env.HTTPS_PROXY}</https_proxy>
                                     <no_proxy>${env.NO_PROXY}</no_proxy>

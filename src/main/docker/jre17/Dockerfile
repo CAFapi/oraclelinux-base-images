@@ -19,6 +19,7 @@
 # - Install Java 17 Runtime
 #
 ARG BASE_IMAGE
+ARG JRE21_IMAGE
 FROM ${BASE_IMAGE} AS stage1
 
 # Install OpenJDK 21 Runtime Environment
@@ -26,21 +27,26 @@ RUN microdnf -y install java-17-openjdk && \
     microdnf clean all
 
 #
-# Stage 2: Gather up any files to be added to the image
+# Stage 2: Run jre21 image to get script
 #
-FROM stage1 AS stage2
+FROM ${JRE21_IMAGE} AS stage2
+
+#
+# Stage 3: Gather up any files to be added to the image
+#
+FROM stage1 AS stage3
 
 # Install Java certificate installation script
-COPY install-ca-cert-java.sh /wd/startup/startup.d/
+COPY --from=stage2 /startup/startup.d/install-ca-cert-java.sh /wd/startup/startup.d/
 RUN chmod 711 /wd/startup/startup.d/install-ca-cert-java.sh
 
 #
-# Stage 3: The remainder of the actual image definition
+# Stage 4: The remainder of the actual image definition
 #
 FROM stage1
 
 # Add the files that have been gathered up to the image
-COPY --from=stage2 /wd /
+COPY --from=stage3 /wd /
 
 # Set JRE Home
 ENV JRE_HOME=/etc/alternatives/jre_17_openjdk

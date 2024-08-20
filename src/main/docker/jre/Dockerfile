@@ -26,6 +26,9 @@ ARG JAVA_VERSION
 RUN microdnf -y install java-${JAVA_VERSION}-openjdk && \
     microdnf clean all
 
+# Set JRE Home
+ENV JRE_HOME=/etc/alternatives/jre_${JAVA_VERSION}_openjdk
+
 #
 # Stage 2: Gather up any files to be added to the image
 #
@@ -42,7 +45,3 @@ FROM stage1
 
 # Add the files that have been gathered up to the image
 COPY --from=stage2 /wd /
-
-# Set JRE Home
-ARG JAVA_VERSION
-ENV JRE_HOME=/etc/alternatives/jre_${JAVA_VERSION}_openjdk

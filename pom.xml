@@ -187,7 +187,7 @@
                                     <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-base${dockerProjectVersion}</BASE_IMAGE>
                                     <JAVA_VERSION>17</JAVA_VERSION>
 
-                                     <!--Enable internet access--> 
+                                    <!-- Enable internet access -->
                                     <http_proxy>${env.HTTP_PROXY}</http_proxy>
                                     <https_proxy>${env.HTTPS_PROXY}</https_proxy>
                                     <no_proxy>${env.NO_PROXY}</no_proxy>

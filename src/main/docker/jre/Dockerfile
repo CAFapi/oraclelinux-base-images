@@ -21,7 +21,7 @@
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE} AS stage1
 
-# Install OpenJDK 21 Runtime Environment
+# Install OpenJDK Runtime Environment
 ARG JAVA_VERSION
 RUN microdnf -y install java-${JAVA_VERSION}-openjdk && \
     microdnf clean all

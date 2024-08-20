@@ -36,8 +36,6 @@ COPY DISABLE-CBC.pmod /etc/crypto-policies/policies/modules
 RUN microdnf -y --refresh upgrade && \
     microdnf -y install postgresql16 procps crypto-policies-scripts && \
     update-crypto-policies --set DEFAULT:DISABLE-CBC && \
-    sed -rie '/^jdk.tls.disabledAlgorithms=/s/$/, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256/' \
-    /etc/crypto-policies/back-ends/java.config && \
     microdnf -y remove crypto-policies-scripts && \
     microdnf clean all
 

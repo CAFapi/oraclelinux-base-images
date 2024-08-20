@@ -180,21 +180,6 @@
                             </build>
                         </image>
                         <image>
-                            <name>${dockerCafImagePrefix}oraclelinux-jre21${dockerProjectVersion}</name>
-                            <build>
-                                <contextDir>jre</contextDir>
-                                <args>
-                                    <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-base${dockerProjectVersion}</BASE_IMAGE>
-                                    <JAVA_VERSION>21</JAVA_VERSION>
-
-                                    <!-- Enable internet access -->
-                                    <http_proxy>${env.HTTP_PROXY}</http_proxy>
-                                    <https_proxy>${env.HTTPS_PROXY}</https_proxy>
-                                    <no_proxy>${env.NO_PROXY}</no_proxy>
-                                </args>
-                            </build>
-                        </image>
-                        <image>
                             <name>${dockerCafImagePrefix}oraclelinux-jre17${dockerProjectVersion}</name>
                             <build>
                                 <contextDir>jre</contextDir>
@@ -203,6 +188,21 @@
                                     <JAVA_VERSION>17</JAVA_VERSION>
 
                                      <!--Enable internet access--> 
+                                    <http_proxy>${env.HTTP_PROXY}</http_proxy>
+                                    <https_proxy>${env.HTTPS_PROXY}</https_proxy>
+                                    <no_proxy>${env.NO_PROXY}</no_proxy>
+                                </args>
+                            </build>
+                        </image>
+                        <image>
+                            <name>${dockerCafImagePrefix}oraclelinux-jre21${dockerProjectVersion}</name>
+                            <build>
+                                <contextDir>jre</contextDir>
+                                <args>
+                                    <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-base${dockerProjectVersion}</BASE_IMAGE>
+                                    <JAVA_VERSION>21</JAVA_VERSION>
+
+                                    <!-- Enable internet access -->
                                     <http_proxy>${env.HTTP_PROXY}</http_proxy>
                                     <https_proxy>${env.HTTPS_PROXY}</https_proxy>
                                     <no_proxy>${env.NO_PROXY}</no_proxy>

@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-cipher = -AES-128-CBC -AES-256-CBC -CHACHA20-POLY1305
+cipher = -AES-128-CBC -AES-256-CBC

@@ -21,9 +21,11 @@
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE} AS stage1
 
-# Install OpenJDK Runtime Environment
+# Install OpenJDK Runtime Environment and disable a weaker security algorithm
 ARG JAVA_VERSION
 RUN microdnf -y install java-${JAVA_VERSION}-openjdk && \
+    sed -rie '/^jdk.tls.disabledAlgorithms=/s/$/, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256/' \
+        /etc/crypto-policies/back-ends/java.config && \
     microdnf clean all
 
 # Set JRE Home

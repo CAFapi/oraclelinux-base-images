@@ -27,16 +27,10 @@ ENV LANG=C.utf8
 # Add the PostgreSQL repository and public key
 COPY pgdg16 /
 
-# Copy custom crypto-policy file
-COPY DISABLE-CBC.pmod /etc/crypto-policies/policies/modules
-
 # Update the OS packages
 # Install PSQL and Process Utilities
-# Install crypto-policies-scripts and disable weaker security algorithms
 RUN microdnf -y --refresh upgrade && \
-    microdnf -y install postgresql16 procps crypto-policies-scripts && \
-    update-crypto-policies --set DEFAULT:DISABLE-CBC && \
-    microdnf -y remove crypto-policies-scripts && \
+    microdnf -y install postgresql16 procps && \
     microdnf clean all
 
 #

@@ -28,7 +28,7 @@ COPY DISABLE-CBC.pmod /etc/crypto-policies/policies/modules
 ARG JAVA_VERSION
 RUN microdnf -y install java-${JAVA_VERSION}-openjdk && \
     update-crypto-policies --set DEFAULT:DISABLE-CBC && \
-    sed -rie '/^jdk.tls.disabledAlgorithms=/s/$/, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256/' \
+    sed -ri -e '/^jdk.tls.disabledAlgorithms=/s/$/, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256/' \
         /etc/crypto-policies/back-ends/java.config && \
     microdnf clean all
 

@@ -225,6 +225,7 @@
                         </licenseSet>
                     </licenseSets>
                     <mapping>
+                        <pmod>SCRIPT_STYLE</pmod>
                         <repo>SCRIPT_STYLE</repo>
                     </mapping>
                 </configuration>

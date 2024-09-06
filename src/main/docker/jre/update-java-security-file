@@ -1,0 +1,41 @@
+#!/bin/bash
+#
+# Copyright 2024 Open Text.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# Fix for SecureRandom.getInstanceStrong() not available on FIPS enabled system:
+# See: https://issues.redhat.com/browse/RHEL-3478
+
+# Find the java.security file
+java_security_file=$(find /etc/java -name "java.security" | grep -v "jre" | sort -r | head -n 1)
+
+if [ -z "$java_security_file" ]; then
+    echo "Error: java.security file not found."
+    exit 1
+fi
+
+echo "Found java.security file at: $java_security_file"
+
+# Make a backup of the original file
+cp "$java_security_file" "${java_security_file}.bak"
+
+# Perform the modification (securerandom.strongAlgorithms=NativePRNGBlocking:SUN,DRBG:SUN)
+if sed -i 's/^securerandom\.strongAlgorithms=.*/securerandom.strongAlgorithms=PKCS11:SunPKCS11-NSS-FIPS/' "$java_security_file"; then
+    echo "Successfully updated $java_security_file"
+    echo "A backup of the original file has been created at ${java_security_file}.bak"
+else
+    echo "Error: Failed to update $java_security_file"
+    exit 1
+fi

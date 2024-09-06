@@ -44,6 +44,11 @@ FROM stage1 AS stage2
 COPY install-ca-cert-java.sh /wd/startup/startup.d/
 RUN chmod 711 /wd/startup/startup.d/install-ca-cert-java.sh
 
+# Fix for SecureRandom.getInstanceStrong() not available on FIPS enabled system:
+# See: https://issues.redhat.com/browse/RHEL-3478
+COPY update-java-security-file.sh /wd/startup/startup.d/
+RUN chmod 711 /wd/startup/startup.d/update-java-security-file.sh
+
 #
 # Stage 3: The remainder of the actual image definition
 #

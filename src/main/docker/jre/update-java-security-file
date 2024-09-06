@@ -15,9 +15,6 @@
 # limitations under the License.
 #
 
-# Fix for SecureRandom.getInstanceStrong() not available on FIPS enabled system:
-# See: https://issues.redhat.com/browse/RHEL-3478
-
 # Find the java.security file
 java_security_file=$(find /etc/java -name "java.security" | grep -v "jre" | sort -r | head -n 1)
 
@@ -31,7 +28,8 @@ echo "Found java.security file at: $java_security_file"
 # Make a backup of the original file
 cp "$java_security_file" "${java_security_file}.bak"
 
-# Perform the modification (securerandom.strongAlgorithms=NativePRNGBlocking:SUN,DRBG:SUN)
+# Fix for SecureRandom.getInstanceStrong() not available on FIPS enabled system
+# See: https://issues.redhat.com/browse/RHEL-3478
 if sed -i 's/^securerandom\.strongAlgorithms=.*/securerandom.strongAlgorithms=PKCS11:SunPKCS11-NSS-FIPS/' "$java_security_file"; then
     echo "Successfully updated $java_security_file"
     echo "A backup of the original file has been created at ${java_security_file}.bak"

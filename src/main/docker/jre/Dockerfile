@@ -35,6 +35,12 @@ RUN microdnf -y install java-${JAVA_VERSION}-openjdk && \
 # Set JRE Home
 ENV JRE_HOME=/etc/alternatives/jre_${JAVA_VERSION}_openjdk
 
+# Update java.security file to fix SecureRandom.getInstanceStrong() not being available on a FIPS enabled system:
+# See: https://issues.redhat.com/browse/RHEL-3478
+RUN java_security_file=$(find /etc/java -name "java.security" | grep -v "jre" | sort -r | head -n 1) && \
+    [ -n "$java_security_file" ] && \
+    sed -i 's/^securerandom\.strongAlgorithms=.*/securerandom.strongAlgorithms=PKCS11:SunPKCS11-NSS-FIPS/' "$java_security_file"
+
 #
 # Stage 2: Gather up any files to be added to the image
 #
@@ -43,10 +49,6 @@ FROM stage1 AS stage2
 # Install Java certificate installation script
 COPY install-ca-cert-java.sh /wd/startup/startup.d/
 RUN chmod 711 /wd/startup/startup.d/install-ca-cert-java.sh
-
-# Update java.security file
-COPY update-java-security-file.sh /wd/startup/startup.d/
-RUN chmod 711 /wd/startup/startup.d/update-java-security-file.sh
 
 #
 # Stage 3: The remainder of the actual image definition

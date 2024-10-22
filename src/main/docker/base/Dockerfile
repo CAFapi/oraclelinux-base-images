@@ -34,9 +34,36 @@ RUN microdnf -y --refresh upgrade && \
     microdnf clean all
 
 #
-# Stage 2: Compile su-exec
+# Stage 2: Install newer version of curl
 #
 FROM stage1 AS stage2
+
+ARG CURL_VERSION=8.10.1
+
+# Install curl build dependencies
+RUN microdnf -y install \
+    wget \
+    gcc \
+    make \
+    libtool \
+    openssl-devel \
+    libpsl-devel && \
+    microdnf clean all
+
+# Download and build curl
+RUN wget https://curl.se/download/curl-${CURL_VERSION}.tar.gz && \
+    tar -xzvf curl-${CURL_VERSION}.tar.gz && \
+    cd curl-${CURL_VERSION} && \
+    ./configure --with-openssl && \
+    make && \
+    make install &&  \
+    cd .. && \
+    rm -rf curl-${CURL_VERSION} curl-${CURL_VERSION}.tar.gz
+
+#
+# Stage 3: Compile su-exec
+#
+FROM stage1 AS stage3
 
 RUN microdnf -y install gcc && \
     microdnf clean all
@@ -48,28 +75,31 @@ RUN gcc -Wall /usr/local/bin/su-exec.c -o /usr/local/bin/su-exec && \
     rm /usr/local/bin/su-exec.c
 
 #
-# Stage 3: Gather up any files to be added to the image
+# Stage 4: Gather up any files to be added to the image
 #
-FROM stage1 AS stage3
+FROM stage1 AS stage4
 
 # Copy the scripts and startup folders over from the opensuse base image
 COPY --from=${projectDockerRegistry}/cafapi/opensuse-base /scripts /wd/scripts
 COPY --from=${projectDockerRegistry}/cafapi/opensuse-base /startup /wd/startup
 
+# Copy curl
+COPY --from=stage2 /usr/local/ /wd/usr/local/
+
 # Copy su-exec
-COPY --from=stage2 /usr/local/bin/su-exec /wd/usr/local/bin/su-exec
+COPY --from=stage3 /usr/local/bin/su-exec /wd/usr/local/bin/su-exec
 
 # Add Tini
 COPY maven/tini /wd
 RUN chmod 711 /wd/tini
 
 #
-# Stage 4: The remainder of the actual image definition
+# Stage 5: The remainder of the actual image definition
 #
 FROM stage1
 
 # Add the files that have been gathered up to the image
-COPY --from=stage3 /wd /
+COPY --from=stage4 /wd /
 
 # Set the default entrypoint
 ENTRYPOINT ["/tini", "--", "/startup/startup.sh"]

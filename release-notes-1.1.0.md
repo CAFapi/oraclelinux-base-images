@@ -1,5 +1,3 @@
-!not-ready-for-release!
-
 #### Version Number
 ${version-number}
 
@@ -12,3 +10,4 @@ ${version-number}
 - US969005: Curl version updated from `7.76.1` to `8.10.1`.
 
 #### Known Issues
+- None

@@ -30,7 +30,7 @@ COPY pgdg16 /
 # Update the OS packages
 # Install PSQL and Process Utilities
 RUN microdnf -y --refresh upgrade && \
-    microdnf -y install postgresql16 procps && \
+    microdnf -y install postgresql16 procps curl && \
     microdnf clean all
 
 #

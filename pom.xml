@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2025 Open Text.
+    Copyright 2024-2025 Open Text.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -60,7 +60,6 @@
 
     <properties>
         <copyrightYear>2025</copyrightYear>
-        <copyrightNotice>Copyright ${copyrightYear} Open Text.</copyrightNotice>
         <maven.install.skip>true</maven.install.skip>
         <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
         <dockerHubOrganization>cafapi</dockerHubOrganization>

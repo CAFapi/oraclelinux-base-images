@@ -4,7 +4,6 @@ This project builds a number of base images which are based on the latest versio
 
 The images which are built in this project are:
 - oraclelinux-base
-  - oraclelinux-jre17
   - oraclelinux-jre21
 
 ### Tini

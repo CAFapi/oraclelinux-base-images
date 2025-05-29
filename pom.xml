@@ -193,6 +193,21 @@
                                 </args>
                             </build>
                         </image>
+                        <image>
+                            <name>${dockerCafImagePrefix}oraclelinux-jdk21${dockerProjectVersion}</name>
+                            <build>
+                                <contextDir>jdk</contextDir>
+                                <args>
+                                    <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-base${dockerProjectVersion}</BASE_IMAGE>
+                                    <JAVA_VERSION>21</JAVA_VERSION>
+
+                                    <!-- Enable internet access -->
+                                    <http_proxy>${env.HTTP_PROXY}</http_proxy>
+                                    <https_proxy>${env.HTTPS_PROXY}</https_proxy>
+                                    <no_proxy>${env.NO_PROXY}</no_proxy>
+                                </args>
+                            </build>
+                        </image>
                     </images>
                     <verbose>api,build</verbose>
                 </configuration>

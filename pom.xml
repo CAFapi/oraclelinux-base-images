@@ -23,7 +23,7 @@
 
     <groupId>com.github.cafapi</groupId>
     <artifactId>oraclelinux-base-images</artifactId>
-    <version>1.2.3-SNAPSHOT</version>
+    <version>1.2.3-118</version>
     <packaging>pom</packaging>
 
     <name>CAFapi Oracle Linux base images</name>

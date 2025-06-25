@@ -27,7 +27,8 @@ COPY DISABLE-CBC.pmod /etc/crypto-policies/policies/modules
 # Install OpenJDK Runtime Environment, disable weaker security algorithms, and update java.security file to fix
 # SecureRandom.getInstanceStrong() not being available on a FIPS-enabled system (https://issues.redhat.com/browse/RHEL-3478)
 ARG JAVA_VERSION
-RUN microdnf -y install java-${JAVA_VERSION}-openjdk && \
+ARG JAVA_PACKAGE
+RUN microdnf -y install java-${JAVA_VERSION}-${JAVA_PACKAGE} && \
     update-crypto-policies --set DEFAULT:DISABLE-CBC && \
     sed -ri -e '/^jdk.tls.disabledAlgorithms=/s/$/, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256/' \
         /etc/crypto-policies/back-ends/java.config && \

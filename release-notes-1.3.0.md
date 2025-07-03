@@ -1,5 +1,3 @@
-!not-ready-for-release!
-
 #### Version Number
 ${version-number}
 
@@ -7,3 +5,4 @@ ${version-number}
 - US1035191: The project now includes a Java JDK image.
 
 #### Known Issues
+- None

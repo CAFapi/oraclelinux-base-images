@@ -46,7 +46,7 @@ FROM stage1 AS stage2
 
 # Install Java certificate installation script
 COPY install-ca-cert-java.sh /wd/startup/startup.d/
-RUN chmod 711 /wd/startup/startup.d/install-ca-cert-java.sh
+RUN chmod a+rx /wd/startup/startup.d/install-ca-cert-java.sh
 
 #
 # Stage 3: The remainder of the actual image definition

@@ -123,9 +123,9 @@
                 <configuration>
                     <imageManagement>
                         <image>
-                            <repository>${dockerHubPublic}/cafapi/opensuse-base</repository>
-                            <tag>4.3.1</tag>
-                            <digest>sha256:ac10c54d3176669873d134d0b126f88c9bffcd904764b0cdb6ff518d2a9f3c12</digest>
+                            <targetRepository>cafapi/opensuse-base</targetRepository>
+                            <repository>${dockerHubPublic}/cafapi/prereleases</repository>
+                            <tag>opensuse-base-10.0.1-mb-test-SNAPSHOT</tag>
                         </image>
                         <image>
                             <repository>${dockerHubPublic}/library/oraclelinux</repository>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2024-2025 Open Text.
+    Copyright 2024-2026 Open Text.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@
     </developers>
 
     <properties>
-        <copyrightYear>2025</copyrightYear>
+        <copyrightYear>2026</copyrightYear>
         <maven.install.skip>true</maven.install.skip>
         <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
         <dockerHubOrganization>cafapi</dockerHubOrganization>
@@ -123,9 +123,9 @@
                 <configuration>
                     <imageManagement>
                         <image>
-                            <targetRepository>cafapi/opensuse-base</targetRepository>
-                            <repository>${dockerHubPublic}/cafapi/prereleases</repository>
-                            <tag>opensuse-base-5.1.0-SNAPSHOT</tag>
+                            <repository>${dockerHubPublic}/cafapi/opensuse-base</repository>
+                            <tag>5.1.0</tag>
+                            <digest>sha256:57bc95fa9c60bbb4fb911ec4f055da3c7ae8d3487733aec2343f4b27210eb8b6</digest>
                         </image>
                         <image>
                             <repository>${dockerHubPublic}/library/oraclelinux</repository>

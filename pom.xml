@@ -154,7 +154,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <autoPull>always</autoPull>
                     <images>
                         <image>
                             <name>${dockerCafImagePrefix}oraclelinux-base${dockerProjectVersion}</name>

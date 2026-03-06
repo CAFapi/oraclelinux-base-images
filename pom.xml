@@ -83,7 +83,7 @@
                 <plugin>
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
-                    <version>0.45.0</version>
+                    <version>0.48.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -154,7 +154,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <autoPull>always</autoPull>
                     <images>
                         <image>
                             <name>${dockerCafImagePrefix}oraclelinux-base${dockerProjectVersion}</name>

@@ -125,7 +125,7 @@
                         <image>
                             <targetRepository>cafapi/opensuse-base</targetRepository>
                             <repository>${dockerHubPublic}/cafapi/prereleases</repository>
-                            <tag>opensuse-base-7.0.0-US1049088-SNAPSHOT</tag>
+                            <tag>opensuse-base-7.0.0-SNAPSHOT</tag>
                         </image>
                         <image>
                             <repository>${dockerHubPublic}/library/oraclelinux</repository>

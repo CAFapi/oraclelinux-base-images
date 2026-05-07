@@ -23,7 +23,7 @@
 
     <groupId>com.github.cafapi</groupId>
     <artifactId>oraclelinux-base-images</artifactId>
-    <version>2.1.10-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>CAFapi Oracle Linux base images</name>
@@ -200,6 +200,38 @@
                                 <args>
                                     <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-base${dockerProjectVersion}</BASE_IMAGE>
                                     <JAVA_VERSION>21</JAVA_VERSION>
+                                    <JAVA_PACKAGE>openjdk-devel</JAVA_PACKAGE>
+
+                                    <!-- Enable internet access -->
+                                    <http_proxy>${env.HTTP_PROXY}</http_proxy>
+                                    <https_proxy>${env.HTTPS_PROXY}</https_proxy>
+                                    <no_proxy>${env.NO_PROXY}</no_proxy>
+                                </args>
+                            </build>
+                        </image>
+                        <image>
+                            <name>${dockerCafImagePrefix}oraclelinux-jre25${dockerProjectVersion}</name>
+                            <build>
+                                <contextDir>java</contextDir>
+                                <args>
+                                    <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-base${dockerProjectVersion}</BASE_IMAGE>
+                                    <JAVA_VERSION>25</JAVA_VERSION>
+                                    <JAVA_PACKAGE>openjdk</JAVA_PACKAGE>
+
+                                    <!-- Enable internet access -->
+                                    <http_proxy>${env.HTTP_PROXY}</http_proxy>
+                                    <https_proxy>${env.HTTPS_PROXY}</https_proxy>
+                                    <no_proxy>${env.NO_PROXY}</no_proxy>
+                                </args>
+                            </build>
+                        </image>
+                        <image>
+                            <name>${dockerCafImagePrefix}oraclelinux-jdk25${dockerProjectVersion}</name>
+                            <build>
+                                <contextDir>java</contextDir>
+                                <args>
+                                    <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-base${dockerProjectVersion}</BASE_IMAGE>
+                                    <JAVA_VERSION>25</JAVA_VERSION>
                                     <JAVA_PACKAGE>openjdk-devel</JAVA_PACKAGE>
 
                                     <!-- Enable internet access -->

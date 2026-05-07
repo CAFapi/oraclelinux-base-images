@@ -6,6 +6,8 @@ The images which are built in this project are:
 - oraclelinux-base
   - oraclelinux-jdk21
   - oraclelinux-jre21
+  - oraclelinux-jdk25
+  - oraclelinux-jre25
 
 ### Tini
 [Tini](https://github.com/krallin/tini) is pre-installed in the containers.  If the image entrypoint is not overwritten then it will be automatically used.

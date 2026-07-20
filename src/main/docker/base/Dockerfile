@@ -24,13 +24,11 @@ FROM ${projectDockerRegistry}/library/oraclelinux AS stage1
 # Set the locale manually to a set inherited from the base image (defaults to POSIX)
 ENV LANG=C.utf8
 
-# Add the PostgreSQL repository and public key
-COPY pgdg16 /
-
 # Update the OS packages
 # Install PSQL and Process Utilities
 RUN microdnf -y --refresh upgrade && \
-    microdnf -y install postgresql16 procps && \
+    microdnf -y module enable postgresql:16 && \
+    microdnf -y install postgresql procps && \
     microdnf clean all
 
 #

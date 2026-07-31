@@ -124,8 +124,8 @@
                     <imageManagement>
                         <image>
                             <repository>${dockerHubPublic}/cafapi/opensuse-base</repository>
-                            <tag>7.0.2</tag>
-                            <digest>sha256:93c669e2ded3ddf40a7212471aa6d3e07f196d52fefff72f1be069b6c6249761</digest>
+                            <tag>7.0.3</tag>
+                            <digest>sha256:f413808129fa7e65b0588bc20292c513b62c6b5f024490225fc06d538964b05e</digest>
                         </image>
                         <image>
                             <repository>${dockerHubPublic}/library/oraclelinux</repository>

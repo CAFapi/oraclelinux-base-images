@@ -8,6 +8,8 @@ The images which are built in this project are:
   - oraclelinux-jre21
   - oraclelinux-jdk25
   - oraclelinux-jre25
+  - oraclelinux-otel-jre21
+  - oraclelinux-otel-jre25
 
 ### Tini
 [Tini](https://github.com/krallin/tini) is pre-installed in the containers.  If the image entrypoint is not overwritten then it will be automatically used.
@@ -49,6 +51,27 @@ the script will read the contents of /var/somefile.txt (for example 'mypassword'
 ABC_PASSWORD=mypassword
 ```
 This feature is disabled by default. To enable it, ensure a `USE_FILE_BASED_SECRETS` environment variable is present, with a value of `true`, for example, `USE_FILE_BASED_SECRETS=true`.
+
+### OpenTelemetry-Enabled Images
+
+The `oraclelinux-otel-jre21` and `oraclelinux-otel-jre25` images come pre-configured with OpenTelemetry Java auto-instrumentation and are **enabled by default**.
+
+#### Key Features
+
+- OpenTelemetry Java agent is pre-installed at `/maven/otel/opentelemetry-javaagent.jar`.
+- The agent is automatically attached to any Java process via `JAVA_TOOL_OPTIONS` when the container starts.
+- Services using these images are instrumented out of the box for OTLP/gRPC export.
+
+#### Configuration
+
+The OTel images set these environment variables by default and can be overridden at runtime:
+
+| **Environment Variable**           | **Default Value**                      |
+|------------------------------------|----------------------------------------|
+| `OTEL_JAVAAGENT_ENABLED`           | `true`                                 |
+| `OTEL_TRACES_EXPORTER`             | `otlp`                                 |
+| `OTEL_EXPORTER_OTLP_ENDPOINT`      | `http://host.docker.internal:18889`   |
+| `OTEL_EXPORTER_OTLP_PROTOCOL`      | `grpc`                                 |
 
 ### Pre-Installed Utility Scripts
 

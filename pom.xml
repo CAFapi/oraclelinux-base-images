@@ -117,6 +117,32 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-otel-javaagent</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>io.opentelemetry.javaagent</groupId>
+                                    <artifactId>opentelemetry-javaagent</artifactId>
+                                    <version>2.29.0</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/downloads/otel</outputDirectory>
+                                    <destFileName>opentelemetry-javaagent.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>com.github.cafapi.plugins.docker.versions</groupId>
                 <artifactId>docker-versions-maven-plugin</artifactId>
                 <extensions>true</extensions>
@@ -239,6 +265,60 @@
                                     <https_proxy>${env.HTTPS_PROXY}</https_proxy>
                                     <no_proxy>${env.NO_PROXY}</no_proxy>
                                 </args>
+                            </build>
+                        </image>
+                        <image>
+                            <name>${dockerCafImagePrefix}oraclelinux-otel-jre21${dockerProjectVersion}</name>
+                            <build>
+                                <contextDir>java-otel</contextDir>
+                                <args>
+                                    <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-jre21${dockerProjectVersion}</BASE_IMAGE>
+
+                                    <!-- Enable internet access -->
+                                    <http_proxy>${env.HTTP_PROXY}</http_proxy>
+                                    <https_proxy>${env.HTTPS_PROXY}</https_proxy>
+                                    <no_proxy>${env.NO_PROXY}</no_proxy>
+                                </args>
+                                <assembly>
+                                    <inline>
+                                        <fileSets>
+                                            <fileSet>
+                                                <directory>${project.build.directory}/downloads/otel</directory>
+                                                <outputDirectory>maven/otel</outputDirectory>
+                                                <includes>
+                                                    <include>opentelemetry-javaagent.jar</include>
+                                                </includes>
+                                            </fileSet>
+                                        </fileSets>
+                                    </inline>
+                                </assembly>
+                            </build>
+                        </image>
+                        <image>
+                            <name>${dockerCafImagePrefix}oraclelinux-otel-jre25${dockerProjectVersion}</name>
+                            <build>
+                                <contextDir>java-otel</contextDir>
+                                <args>
+                                    <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-jre25${dockerProjectVersion}</BASE_IMAGE>
+
+                                    <!-- Enable internet access -->
+                                    <http_proxy>${env.HTTP_PROXY}</http_proxy>
+                                    <https_proxy>${env.HTTPS_PROXY}</https_proxy>
+                                    <no_proxy>${env.NO_PROXY}</no_proxy>
+                                </args>
+                                <assembly>
+                                    <inline>
+                                        <fileSets>
+                                            <fileSet>
+                                                <directory>${project.build.directory}/downloads/otel</directory>
+                                                <outputDirectory>maven/otel</outputDirectory>
+                                                <includes>
+                                                    <include>opentelemetry-javaagent.jar</include>
+                                                </includes>
+                                            </fileSet>
+                                        </fileSets>
+                                    </inline>
+                                </assembly>
                             </build>
                         </image>
                     </images>

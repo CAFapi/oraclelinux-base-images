@@ -59,6 +59,7 @@ The `oraclelinux-otel-jre21` and `oraclelinux-otel-jre25` images come pre-config
 #### Key Features
 
 - OpenTelemetry Java agent is pre-installed at `/maven/otel/opentelemetry-javaagent.jar`.
+- The image overrides `/startup/startup.sh` so the OTel enable script runs in the parent shell before `exec "$@"`.
 - The agent is automatically attached to any Java process via `JAVA_TOOL_OPTIONS` when the container starts.
 - Services using these images are instrumented out of the box for OTLP/gRPC export.
 

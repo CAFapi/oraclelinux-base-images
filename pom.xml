@@ -23,7 +23,7 @@
 
     <groupId>com.github.cafapi</groupId>
     <artifactId>oraclelinux-base-images</artifactId>
-    <version>2.3.2-SNAPSHOT</version>
+    <version>2.3.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>CAFapi Oracle Linux base images</name>
@@ -150,8 +150,8 @@
                     <imageManagement>
                         <image>
                             <repository>${dockerHubPublic}/cafapi/opensuse-base</repository>
-                            <tag>7.0.3</tag>
-                            <digest>sha256:f413808129fa7e65b0588bc20292c513b62c6b5f024490225fc06d538964b05e</digest>
+                            <tag>7.0.4</tag>
+                            <digest>sha256:fe0b83541a7b7e3d9d594c8793f7884651fa04dce10c7fa972fa6feb7580eac5</digest>
                         </image>
                         <image>
                             <repository>${dockerHubPublic}/library/oraclelinux</repository>

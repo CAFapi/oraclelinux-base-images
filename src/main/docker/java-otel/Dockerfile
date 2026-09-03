@@ -29,8 +29,7 @@ COPY enable-otel-javaagent.sh /startup/startup.d/20-enable-otel-javaagent.sh
 RUN chmod a+rx /startup/startup.sh
 RUN chmod a+rx /startup/startup.d/20-enable-otel-javaagent.sh
 
-# `OTEL_EXPORTER_OTLP_ENDPOINT` is yet to be decided. For the time being and for testing purposes, it is set to aspire-dashboard's exporter port.
-ENV OTEL_JAVAAGENT_ENABLED=true \
+# OTEL Java agent is disabled by default. Enable by setting OTEL_JAVAAGENT_ENABLED=true
+ENV OTEL_JAVAAGENT_ENABLED=false \
     OTEL_TRACES_EXPORTER=otlp \
-    OTEL_EXPORTER_OTLP_ENDPOINT=http://host.docker.internal:18889 \
     OTEL_EXPORTER_OTLP_PROTOCOL=grpc

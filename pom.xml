@@ -268,7 +268,7 @@
                             </build>
                         </image>
                         <image>
-                            <name>${dockerCafImagePrefix}oraclelinux-otel-jre21${dockerProjectVersion}</name>
+                            <name>${dockerCafImagePrefix}oraclelinux-jre21-otel${dockerProjectVersion}</name>
                             <build>
                                 <contextDir>java-otel</contextDir>
                                 <args>
@@ -295,7 +295,7 @@
                             </build>
                         </image>
                         <image>
-                            <name>${dockerCafImagePrefix}oraclelinux-otel-jre25${dockerProjectVersion}</name>
+                            <name>${dockerCafImagePrefix}oraclelinux-jre25-otel${dockerProjectVersion}</name>
                             <build>
                                 <contextDir>java-otel</contextDir>
                                 <args>

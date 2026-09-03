@@ -8,8 +8,8 @@ The images which are built in this project are:
   - oraclelinux-jre21
   - oraclelinux-jdk25
   - oraclelinux-jre25
-  - oraclelinux-otel-jre21
-  - oraclelinux-otel-jre25
+  - oraclelinux-jre21-otel
+  - oraclelinux-jre25-otel
 
 ### Tini
 [Tini](https://github.com/krallin/tini) is pre-installed in the containers.  If the image entrypoint is not overwritten then it will be automatically used.

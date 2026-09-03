@@ -19,8 +19,8 @@ set -eu
 
 OTEL_AGENT_PATH="/maven/otel/opentelemetry-javaagent.jar"
 
-# Enabled by default for otel base images; runtime can still override to false.
-OTEL_JAVAAGENT_ENABLED="${OTEL_JAVAAGENT_ENABLED:-true}"
+# Disabled by default; runtime can enable by setting OTEL_JAVAAGENT_ENABLED=true.
+OTEL_JAVAAGENT_ENABLED="${OTEL_JAVAAGENT_ENABLED:-false}"
 export OTEL_JAVAAGENT_ENABLED
 
 if [ "$OTEL_JAVAAGENT_ENABLED" = "true" ]; then

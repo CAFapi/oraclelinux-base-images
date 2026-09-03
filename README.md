@@ -74,6 +74,8 @@ The OTel images set these environment variables by default and can be overridden
 | `OTEL_EXPORTER_OTLP_ENDPOINT`      | `http://host.docker.internal:18889`   |
 | `OTEL_EXPORTER_OTLP_PROTOCOL`      | `grpc`                                 |
 
+Note: `OTEL_EXPORTER_OTLP_ENDPOINT` is yet to be decided. For the time being and for testing purposes, it is set to aspire-dashboard's exporter port.
+
 ### Pre-Installed Utility Scripts
 
 #### Database Creation Script

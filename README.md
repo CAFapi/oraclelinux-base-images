@@ -54,7 +54,7 @@ This feature is disabled by default. To enable it, ensure a `USE_FILE_BASED_SECR
 
 ### OpenTelemetry-Enabled Images
 
-The `oraclelinux-otel-jre21` and `oraclelinux-otel-jre25` images come pre-configured with OpenTelemetry Java auto-instrumentation and are **enabled by default**.
+The `oraclelinux-jre21-otel` and `oraclelinux-jre25-otel` images come pre-configured with OpenTelemetry Java auto-instrumentation and are **disabled by default**. It can be enabled at runtime by setting the `OTEL_JAVAAGENT_ENABLED` environment variable to `true`.
 
 #### Key Features
 
@@ -69,12 +69,9 @@ The OTel images set these environment variables by default and can be overridden
 
 | **Environment Variable**           | **Default Value**                      |
 |------------------------------------|----------------------------------------|
-| `OTEL_JAVAAGENT_ENABLED`           | `true`                                 |
+| `OTEL_JAVAAGENT_ENABLED`           | `false`                                 |
 | `OTEL_TRACES_EXPORTER`             | `otlp`                                 |
-| `OTEL_EXPORTER_OTLP_ENDPOINT`      | `http://host.docker.internal:18889`   |
 | `OTEL_EXPORTER_OTLP_PROTOCOL`      | `grpc`                                 |
-
-Note: `OTEL_EXPORTER_OTLP_ENDPOINT` is yet to be decided. For the time being and for testing purposes, it is set to aspire-dashboard's exporter port.
 
 ### Pre-Installed Utility Scripts
 

@@ -67,6 +67,16 @@
         <dockerProjectVersion>${dockerVersionSeperator}${project.version}</dockerProjectVersion>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.opentelemetry.javaagent</groupId>
+                <artifactId>opentelemetry-javaagent</artifactId>
+                <version>2.29.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -112,6 +122,31 @@
                             <uri>https://github.com/krallin/tini/releases/download/v0.19.0/tini</uri>
                             <sha256>93dcc18adc78c65a028a84799ecf8ad40c936fdfc5f2a57b1acda5a8117fa82c</sha256>
                             <outputDirectory>${project.build.directory}/downloads/base</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-otel-javaagent</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>io.opentelemetry.javaagent</groupId>
+                                    <artifactId>opentelemetry-javaagent</artifactId>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/downloads/otel</outputDirectory>
+                                    <destFileName>opentelemetry-javaagent.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
                         </configuration>
                     </execution>
                 </executions>
@@ -239,6 +274,50 @@
                                     <https_proxy>${env.HTTPS_PROXY}</https_proxy>
                                     <no_proxy>${env.NO_PROXY}</no_proxy>
                                 </args>
+                            </build>
+                        </image>
+                        <image>
+                            <name>${dockerCafImagePrefix}oraclelinux-jre21-otel${dockerProjectVersion}</name>
+                            <build>
+                                <contextDir>java-otel</contextDir>
+                                <args>
+                                    <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-jre21${dockerProjectVersion}</BASE_IMAGE>
+                                </args>
+                                <assembly>
+                                    <inline>
+                                        <fileSets>
+                                            <fileSet>
+                                                <directory>${project.build.directory}/downloads/otel</directory>
+                                                <outputDirectory>otel</outputDirectory>
+                                                <includes>
+                                                    <include>opentelemetry-javaagent.jar</include>
+                                                </includes>
+                                            </fileSet>
+                                        </fileSets>
+                                    </inline>
+                                </assembly>
+                            </build>
+                        </image>
+                        <image>
+                            <name>${dockerCafImagePrefix}oraclelinux-jre25-otel${dockerProjectVersion}</name>
+                            <build>
+                                <contextDir>java-otel</contextDir>
+                                <args>
+                                    <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-jre25${dockerProjectVersion}</BASE_IMAGE>
+                                </args>
+                                <assembly>
+                                    <inline>
+                                        <fileSets>
+                                            <fileSet>
+                                                <directory>${project.build.directory}/downloads/otel</directory>
+                                                <outputDirectory>otel</outputDirectory>
+                                                <includes>
+                                                    <include>opentelemetry-javaagent.jar</include>
+                                                </includes>
+                                            </fileSet>
+                                        </fileSets>
+                                    </inline>
+                                </assembly>
                             </build>
                         </image>
                     </images>

@@ -58,7 +58,7 @@ The `oraclelinux-jre21-otel` and `oraclelinux-jre25-otel` images come pre-config
 
 #### Key Features
 
-- OpenTelemetry Java agent is pre-installed at `/maven/otel/opentelemetry-javaagent.jar`.
+- OpenTelemetry Java agent is pre-installed at `/opt/otel/opentelemetry-javaagent.jar`.
 - The image overrides `/startup/startup.sh` so the OTel enable script runs in the parent shell before `exec "$@"`.
 - The agent is automatically attached to any Java process via `JAVA_TOOL_OPTIONS` when the container starts.
 - Services using these images are instrumented out of the box for OTLP/gRPC export.
@@ -67,11 +67,13 @@ The `oraclelinux-jre21-otel` and `oraclelinux-jre25-otel` images come pre-config
 
 The OTel images set these environment variables by default and can be overridden at runtime:
 
-| **Environment Variable**           | **Default Value**                      |
-|------------------------------------|----------------------------------------|
-| `OTEL_JAVAAGENT_ENABLED`           | `false`                                 |
-| `OTEL_TRACES_EXPORTER`             | `otlp`                                 |
-| `OTEL_EXPORTER_OTLP_PROTOCOL`      | `grpc`                                 |
+| **Environment Variable**           | **Default Value**  | **Purpose**                                                                                     |
+|------------------------------------|--------------------|--------------------------------------------------------------------------------------------------|
+| `OTEL_JAVAAGENT_ENABLED`           | `false`            | Enable/disable OpenTelemetry Java agent attachment. Set to `true` to enable instrumentation.    |
+| `OTEL_TRACES_EXPORTER`             | `otlp`             | Exporter type for traces. See [OTel Java Agent Configuration](https://opentelemetry.io/docs/zero-code/java/agent/configuration/#traces-exporters). |
+| `OTEL_EXPORTER_OTLP_PROTOCOL`      | `grpc`             | Protocol for OTLP exporter (`grpc` or `http/protobuf`). Requires `OTEL_EXPORTER_OTLP_ENDPOINT` to be set. See [OTel OTLP Exporter Configuration](https://opentelemetry.io/docs/zero-code/java/agent/configuration/#otlp-exporter). |
+
+For comprehensive configuration options, refer to the [OpenTelemetry Java Agent documentation](https://opentelemetry.io/docs/zero-code/java/agent/configuration/).
 
 ### Pre-Installed Utility Scripts
 

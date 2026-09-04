@@ -22,7 +22,7 @@ FROM ${BASE_IMAGE}
 COPY startup.sh /startup/startup.sh
 
 # Copy OpenTelemetry Java agent
-COPY maven/otel/opentelemetry-javaagent.jar /maven/otel/opentelemetry-javaagent.jar
+COPY maven/otel/opentelemetry-javaagent.jar /opt/otel/opentelemetry-javaagent.jar
 
 # Copy OpenTelemetry startup script
 COPY enable-otel-javaagent.sh /startup/startup.d/20-enable-otel-javaagent.sh

@@ -17,7 +17,7 @@
 
 set -eu
 
-OTEL_AGENT_PATH="/maven/otel/opentelemetry-javaagent.jar"
+OTEL_AGENT_PATH="/opt/otel/opentelemetry-javaagent.jar"
 
 # Disabled by default; runtime can enable by setting OTEL_JAVAAGENT_ENABLED=true.
 OTEL_JAVAAGENT_ENABLED="${OTEL_JAVAAGENT_ENABLED:-false}"

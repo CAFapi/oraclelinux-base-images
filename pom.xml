@@ -67,6 +67,16 @@
         <dockerProjectVersion>${dockerVersionSeperator}${project.version}</dockerProjectVersion>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.opentelemetry.javaagent</groupId>
+                <artifactId>opentelemetry-javaagent</artifactId>
+                <version>2.29.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -131,7 +141,6 @@
                                 <artifactItem>
                                     <groupId>io.opentelemetry.javaagent</groupId>
                                     <artifactId>opentelemetry-javaagent</artifactId>
-                                    <version>2.29.0</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}/downloads/otel</outputDirectory>
@@ -273,11 +282,6 @@
                                 <contextDir>java-otel</contextDir>
                                 <args>
                                     <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-jre21${dockerProjectVersion}</BASE_IMAGE>
-
-                                    <!-- Enable internet access -->
-                                    <http_proxy>${env.HTTP_PROXY}</http_proxy>
-                                    <https_proxy>${env.HTTPS_PROXY}</https_proxy>
-                                    <no_proxy>${env.NO_PROXY}</no_proxy>
                                 </args>
                                 <assembly>
                                     <inline>
@@ -300,11 +304,6 @@
                                 <contextDir>java-otel</contextDir>
                                 <args>
                                     <BASE_IMAGE>${dockerCafImagePrefix}oraclelinux-jre25${dockerProjectVersion}</BASE_IMAGE>
-
-                                    <!-- Enable internet access -->
-                                    <http_proxy>${env.HTTP_PROXY}</http_proxy>
-                                    <https_proxy>${env.HTTPS_PROXY}</https_proxy>
-                                    <no_proxy>${env.NO_PROXY}</no_proxy>
                                 </args>
                                 <assembly>
                                     <inline>

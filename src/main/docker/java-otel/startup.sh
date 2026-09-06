@@ -15,26 +15,57 @@
 # limitations under the License.
 #
 
-set -eu
+# This script extends the opensuse-base startup pattern with customization to support OpenTelemetry Java agent initialization.
 
-if [ -d /startup/startup.d ]
-then
-    for script in /startup/startup.d/*
-    do
-        if [ -f "$script" ] && [ -x "$script" ]
-        then
-            echo "Running startup script $script"
+# Create a convenience function for logging
+log() {
+    echo "[$(date +%F\ %H:%M:%S.%3NZ) #$(printf '%03X\n' $$).??? INFO  -            -   ] ${0##*/}: $@" 1>&2
+}
 
-            case "$script" in
-                */20-enable-otel-javaagent.sh)
-                    . "$script"
-                    ;;
-                *)
-                    "$script"
-                    ;;
-            esac
-        fi
-    done
+# Export file based secrets
+if [ "$USE_FILE_BASED_SECRETS" = true ]; then
+    log "Running export-file-based-secrets.sh..."
+    source $(dirname "$0")/../scripts/export-file-based-secrets.sh
+    export_file_based_secrets_status=${PIPESTATUS[0]}
+    if [ $export_file_based_secrets_status -ne 0 ]; then
+        echo "ERROR: Error running export-file-based-secrets.sh" |& $(dirname "$0")/../scripts/caf-log-format.sh "startup.sh"
+        exit $export_file_based_secrets_status
+    fi
 fi
 
-exec "$@"
+# Run the executable scripts that are in the drop-in folder
+log "Running startup scripts..."
+for script in $(dirname "$0")/startup.d/*; do
+    if [ -x "$script" ]; then
+        log "Running ${script##*/}..."
+
+        case "$script" in
+            */20-enable-otel-javaagent.sh)
+                # Source OTel enable script in parent shell so exports persist
+                . "$script" |& $(dirname "$0")/../scripts/caf-log-format.sh "${script##*/}" 1>&2
+                ;;
+            *)
+                "$script" |& $(dirname "$0")/../scripts/caf-log-format.sh "${script##*/}" 1>&2
+                ;;
+        esac
+
+        status=${PIPESTATUS[0]}
+        if [ $status -ne 0 ]; then
+            log "Error running ${script##*/}"
+            exit $status
+        fi
+    fi
+done
+
+log "Startup scripts completed"
+
+# If the RUNAS_USER environment variable is set, execute the specified command as that user.
+if [ -n "$RUNAS_USER" ]; then
+    log "The RUNAS_USER environment variable has been set with a user named ${RUNAS_USER}. \
+Subsequent commands will be run as this user. \
+Please note that this user is expected to already exist, and will not be created."
+    exec /usr/local/bin/su-exec $RUNAS_USER "$@"
+else
+    log "The RUNAS_USER environment variable is not set, subsequent commands will be run as the default user."
+    exec "$@"
+fi

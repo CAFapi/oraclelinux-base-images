@@ -17,19 +17,15 @@
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 
-# Override the inherited startup entrypoint so shell startup scripts are sourced
-# in the parent shell and can export env vars for the final Java process.
-COPY startup.sh /startup/startup.sh
-
 # Copy OpenTelemetry Java agent
 COPY maven/otel/opentelemetry-javaagent.jar /opt/otel/opentelemetry-javaagent.jar
 
-# Copy OpenTelemetry startup script
-COPY enable-otel-javaagent.sh /startup/startup.d/20-enable-otel-javaagent.sh
-RUN chmod a+rx /startup/startup.sh
-RUN chmod a+rx /startup/startup.d/20-enable-otel-javaagent.sh
+# Copy OpenTelemetry helper script
+COPY get-otel-java-tool-options.sh /scripts/get-otel-java-tool-options.sh
+RUN chmod a+rx /scripts/get-otel-java-tool-options.sh
 
 # OTEL Java agent is disabled by default. Enable by setting OTEL_JAVAAGENT_ENABLED=true
 ENV OTEL_JAVAAGENT_ENABLED=false \
     OTEL_TRACES_EXPORTER=otlp \
-    OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+    OTEL_EXPORTER_OTLP_PROTOCOL=grpc \
+    OTEL_GET_JAVA_TOOL_OPTIONS=/scripts/get-otel-java-tool-options.sh

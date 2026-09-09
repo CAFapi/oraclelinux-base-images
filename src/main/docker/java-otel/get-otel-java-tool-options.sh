@@ -18,10 +18,7 @@
 set -eu
 
 OTEL_AGENT_PATH="/opt/otel/opentelemetry-javaagent.jar"
-
-# Disabled by default; runtime can enable by setting OTEL_JAVAAGENT_ENABLED=true.
 OTEL_JAVAAGENT_ENABLED="${OTEL_JAVAAGENT_ENABLED:-false}"
-export OTEL_JAVAAGENT_ENABLED
 
 if [ "$OTEL_JAVAAGENT_ENABLED" = "true" ]; then
     if [ ! -f "$OTEL_AGENT_PATH" ]; then
@@ -29,8 +26,5 @@ if [ "$OTEL_JAVAAGENT_ENABLED" = "true" ]; then
         exit 1
     fi
 
-    case "${JAVA_TOOL_OPTIONS:-}" in
-        *"-javaagent:${OTEL_AGENT_PATH}"*) ;;
-        *) export JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS:-} -javaagent:${OTEL_AGENT_PATH}" ;;
-    esac
+    printf '%s' "-javaagent:${OTEL_AGENT_PATH}"
 fi

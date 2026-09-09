@@ -59,9 +59,9 @@ The `oraclelinux-jre21-otel` and `oraclelinux-jre25-otel` images come pre-config
 #### Key Features
 
 - OpenTelemetry Java agent is pre-installed at `/opt/otel/opentelemetry-javaagent.jar`.
-- The image overrides `/startup/startup.sh` so the OTel enable script runs in the parent shell before `exec "$@"`.
-- The agent is automatically attached to any Java process via `JAVA_TOOL_OPTIONS` when the container starts.
-- Services using these images are instrumented out of the box for OTLP/gRPC export.
+- The image provides `/scripts/get-otel-java-tool-options.sh` to return the Java agent option for Java commands that should be instrumented.
+- The agent is attached only when consumers include `$(${OTEL_GET_JAVA_TOOL_OPTIONS})` in the target Java command line.
+- Services using these images can opt specific Java invocations into OTLP/gRPC export.
 
 #### Configuration
 
@@ -72,6 +72,7 @@ The OTel images set these environment variables by default and can be overridden
 | `OTEL_JAVAAGENT_ENABLED`           | `false`            | Enable/disable OpenTelemetry Java agent attachment. Set to `true` to enable instrumentation.    |
 | `OTEL_TRACES_EXPORTER`             | `otlp`             | Exporter type for traces. See [OTel Java Agent Configuration](https://opentelemetry.io/docs/zero-code/java/agent/configuration/#traces-exporters). |
 | `OTEL_EXPORTER_OTLP_PROTOCOL`      | `grpc`             | Protocol for OTLP exporter (`grpc` or `http/protobuf`). Requires `OTEL_EXPORTER_OTLP_ENDPOINT` to be set. See [OTel OTLP Exporter Configuration](https://opentelemetry.io/docs/zero-code/java/agent/configuration/#otlp-exporter). |
+| `OTEL_GET_JAVA_TOOL_OPTIONS`       | `/scripts/get-otel-java-tool-options.sh` | Helper script that prints `-javaagent:/opt/otel/opentelemetry-javaagent.jar` when OTel is enabled. |
 
 For comprehensive configuration options, refer to the [OpenTelemetry Java Agent documentation](https://opentelemetry.io/docs/zero-code/java/agent/configuration/).
 

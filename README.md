@@ -8,6 +8,8 @@ The images which are built in this project are:
   - oraclelinux-jre21
   - oraclelinux-jdk25
   - oraclelinux-jre25
+  - oraclelinux-jre21-otel
+  - oraclelinux-jre25-otel
 
 ### Tini
 [Tini](https://github.com/krallin/tini) is pre-installed in the containers.  If the image entrypoint is not overwritten then it will be automatically used.
@@ -49,6 +51,30 @@ the script will read the contents of /var/somefile.txt (for example 'mypassword'
 ABC_PASSWORD=mypassword
 ```
 This feature is disabled by default. To enable it, ensure a `USE_FILE_BASED_SECRETS` environment variable is present, with a value of `true`, for example, `USE_FILE_BASED_SECRETS=true`.
+
+### OpenTelemetry-Enabled Images
+
+The `oraclelinux-jre21-otel` and `oraclelinux-jre25-otel` images come pre-configured with OpenTelemetry Java auto-instrumentation and are **disabled by default**. It can be enabled at runtime by setting the `OTEL_JAVAAGENT_ENABLED` environment variable to `true`.
+
+#### Key Features
+
+- OpenTelemetry Java agent is pre-installed at `/opt/otel/opentelemetry-javaagent.jar`.
+- The image provides `/scripts/get-otel-java-tool-options.sh` to return the Java agent option for Java commands that should be instrumented.
+- The agent is attached only when consumers include `$(${OTEL_GET_JAVA_TOOL_OPTIONS})` in the target Java command line.
+- Services using these images can opt specific Java invocations into OTLP/gRPC export.
+
+#### Configuration
+
+The OTel images set these environment variables by default and can be overridden at runtime:
+
+| **Environment Variable**           | **Default Value**  | **Purpose**                                                                                     |
+|------------------------------------|--------------------|--------------------------------------------------------------------------------------------------|
+| `OTEL_JAVAAGENT_ENABLED`           | `false`            | Enable/disable OpenTelemetry Java agent attachment. Set to `true` to enable instrumentation.    |
+| `OTEL_TRACES_EXPORTER`             | `otlp`             | Exporter type for traces. See [OTel Java Agent Configuration](https://opentelemetry.io/docs/zero-code/java/agent/configuration/#traces-exporters). |
+| `OTEL_EXPORTER_OTLP_PROTOCOL`      | `grpc`             | Protocol for OTLP exporter (`grpc` or `http/protobuf`). Requires `OTEL_EXPORTER_OTLP_ENDPOINT` to be set. See [OTel OTLP Exporter Configuration](https://opentelemetry.io/docs/zero-code/java/agent/configuration/#otlp-exporter). |
+| `OTEL_GET_JAVA_TOOL_OPTIONS`       | `/scripts/get-otel-java-tool-options.sh` | Helper script that prints `-javaagent:/opt/otel/opentelemetry-javaagent.jar` when OTel is enabled. |
+
+For comprehensive configuration options, refer to the [OpenTelemetry Java Agent documentation](https://opentelemetry.io/docs/zero-code/java/agent/configuration/).
 
 ### Pre-Installed Utility Scripts
 

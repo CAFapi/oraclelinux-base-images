@@ -65,13 +65,14 @@ The `oraclelinux-jre21-otel` and `oraclelinux-jre25-otel` images come pre-config
 
 #### Configuration
 
-The OTel images set these environment variables by default and can be overridden at runtime:
+The following environment variables configure OTel and can be overridden at runtime. The images set the defaults shown below, except for the endpoint, which uses the agent's protocol-dependent default:
 
 | **Environment Variable**           | **Default Value**  | **Purpose**                                                                                     |
 |------------------------------------|--------------------|--------------------------------------------------------------------------------------------------|
 | `OTEL_JAVAAGENT_ENABLED`           | `false`            | Enable/disable OpenTelemetry Java agent attachment. Set to `true` to enable instrumentation.    |
 | `OTEL_TRACES_EXPORTER`             | `otlp`             | Exporter type for traces. See [OTel Java Agent Configuration](https://opentelemetry.io/docs/zero-code/java/agent/configuration/#traces-exporters). |
-| `OTEL_EXPORTER_OTLP_PROTOCOL`      | `grpc`             | Protocol for OTLP exporter (`grpc` or `http/protobuf`). Requires `OTEL_EXPORTER_OTLP_ENDPOINT` to be set. See [OTel OTLP Exporter Configuration](https://opentelemetry.io/docs/zero-code/java/agent/configuration/#otlp-exporter). |
+| `OTEL_EXPORTER_OTLP_PROTOCOL`      | `grpc`             | Protocol for OTLP export: `grpc` or `http/protobuf`. |
+| `OTEL_EXPORTER_OTLP_ENDPOINT`      | `http://localhost:4317` for `grpc` `http://localhost:4318` for `http/protobuf` | Base URL of the OTLP collector. Not set by the image; the agent uses the default for the selected protocol. Override when the collector is not reachable at that address (`localhost` refers to the service container's network namespace). See [OTel OTLP Exporter Configuration](https://opentelemetry.io/docs/languages/java/configuration/#otlp-exporter). |
 | `OTEL_GET_JAVA_TOOL_OPTIONS`       | `/scripts/get-otel-java-tool-options.sh` | Helper script that prints `-javaagent:/opt/otel/opentelemetry-javaagent.jar` when OTel is enabled. |
 
 For comprehensive configuration options, refer to the [OpenTelemetry Java Agent documentation](https://opentelemetry.io/docs/zero-code/java/agent/configuration/).

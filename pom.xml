@@ -159,7 +159,7 @@
                     <imageManagement>
                         <image>
                             <repository>${dockerHubPublic}/cafapi/opensuse-base</repository>
-                            <tag>7.0.5</tag>
+                            <tag>7.0.6</tag>
                             <digest>sha256:78cc6444971f9ec39bffd3f357731ff0812f50690221c41a467874480ae206a7</digest>
                         </image>
                         <image>
